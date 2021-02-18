@@ -29,6 +29,7 @@ const Create = ({ addBlog }) => {
 			isClosable: true,
 			duration: 3000,
 		});
+
 		event.preventDefault();
 	};
 
@@ -67,13 +68,7 @@ const Create = ({ addBlog }) => {
 							onChange={(e) => setBlogAuthor(e.target.value)}
 						/>
 					</FormControl>
-					<Button
-						type='submit'
-						mt='1rem'
-						colorScheme='teal'
-						py='1.5rem'
-						fontSize='lg'
-					>
+					<Button type='submit' mt='1rem' py='1.5rem' fontSize='lg'>
 						Publish
 					</Button>
 				</Flex>

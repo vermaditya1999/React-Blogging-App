@@ -7,6 +7,7 @@ import {
 	Text,
 	Stack,
 	Button,
+	IconButton,
 	Spacer,
 	AlertDialog,
 	AlertDialogOverlay,
@@ -17,6 +18,7 @@ import {
 	useToast,
 	Link as ChakraLink,
 } from '@chakra-ui/react';
+import { MdDelete, MdEdit } from 'react-icons/md';
 
 const Blogs = ({ blogsList, deleteBlog }) => {
 	const toast = useToast();
@@ -36,13 +38,7 @@ const Blogs = ({ blogsList, deleteBlog }) => {
 			<Box>
 				<Text fontSize='xl' textAlign='center'>
 					Such empty, much wow.{' '}
-					<ChakraLink
-						as={Link}
-						to='/create'
-						fontSize='xl'
-						textAlign='center'
-						color='teal.600'
-					>
+					<ChakraLink as={Link} to='/create' fontSize='xl' textAlign='center'>
 						Start blogging now!
 					</ChakraLink>
 				</Text>
@@ -68,9 +64,12 @@ const Blog = ({ blog, handleDeleteBlog }) => {
 			<Flex flexDirection='row' justifyContent='stretch'>
 				<Heading size='lg'>{blog.title}</Heading>
 				<Spacer />
-				<Button colorScheme='teal' onClick={() => setIsOpen(true)}>
-					Delete
-				</Button>
+				<IconButton icon={<MdEdit />} fontSize='lg' mr='1rem' />
+				<IconButton
+					icon={<MdDelete />}
+					onClick={() => setIsOpen(true)}
+					fontSize='lg'
+				/>
 			</Flex>
 			<Text as='em'>{blog.author}</Text>
 			<Text>{blog.content}</Text>

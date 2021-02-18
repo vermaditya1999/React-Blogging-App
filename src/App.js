@@ -1,5 +1,5 @@
-import { Route, Link, Switch } from 'react-router-dom';
-import { useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { ChakraProvider, Box, Flex, extendTheme } from '@chakra-ui/react';
 import Nav from './Nav';
 import Home from './Home';
@@ -16,16 +16,30 @@ const theme = extendTheme({
 });
 
 function App() {
-	let numBlogs = 0;
 	const [blogsList, setBlogsList] = useState([]);
-	const deleteBlog = (id) =>
-		setBlogsList(blogsList.filter((blog) => blog.id != id));
+
+	// Retrieve blog array from local storage at the start of the application
+	useEffect(() => {
+		const data = localStorage.getItem('BLOGS_LIST');
+
+		if (!data) {
+			localStorage.setItem('BLOGS_LIST', blogsList);
+		} else {
+			setBlogsList(JSON.parse(data));
+		}
+	}, []);
+
+	// When blogsList array changes, reflect the changes in local storage
+	useEffect(() => {
+		localStorage.setItem('BLOGS_LIST', JSON.stringify(blogsList));
+	}, [blogsList]);
 
 	const addBlog = (blog) => {
-		blog['id'] = numBlogs;
-		blogsList.unshift(blog);
-		setBlogsList(blogsList);
-		++numBlogs;
+		setBlogsList([{ id: blogsList.length, ...blog }, ...blogsList]);
+	};
+
+	const deleteBlog = (id) => {
+		setBlogsList(blogsList.filter((blog) => blog.id != id));
 	};
 
 	return (
